@@ -2,7 +2,7 @@
 
 import type { NextPage } from "next";
 import { useState } from "react";
-import CameraPopup from "./addcampop"; // Import the modal component
+import CameraPopup from "../components/addcampop"; // Import the modal component
 
 export type AddCameraType = {
   className?: string;

@@ -14,3 +14,7 @@ body {
 ::after {
   border-width: 0;
 }
+
+body {
+  overflow: hidden;
+}
