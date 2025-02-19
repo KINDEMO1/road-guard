@@ -11,6 +11,11 @@ const CameraPopup: NextPage<CameraPopupType> = ({
   className = "",
   onClose,
 }) => {
+  const handleAddClick = () => {
+    console.log("Camera added!"); // Replace with actual logic
+    onClose(); // Close the modal after adding a camera (if needed)
+  };
+
   return (
     <div
       className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 ${className}`}
@@ -39,9 +44,7 @@ const CameraPopup: NextPage<CameraPopupType> = ({
         </div>
 
         {/* Camera Name Input */}
-        <div className="mt-2 flex flex-col items-center">
-          {" "}
-          {/* Reduced mt-4 to mt-2 */}
+        <div className="mt-4 flex flex-col items-center">
           <label className="block text-sm font-montserrat text-black text-center mb-2">
             Camera Name:
           </label>
@@ -53,9 +56,7 @@ const CameraPopup: NextPage<CameraPopupType> = ({
         </div>
 
         {/* Camera API Input */}
-        <div className="mt-2 flex flex-col items-center">
-          {" "}
-          {/* Reduced mt-4 to mt-2 */}
+        <div className="mt-4 flex flex-col items-center">
           <label className="block text-sm font-montserrat text-black text-center mb-2">
             Camera API:
           </label>
@@ -69,7 +70,7 @@ const CameraPopup: NextPage<CameraPopupType> = ({
         {/* Buttons */}
         <div className="flex justify-end gap-4 mt-5">
           <ModalCancel onClick={onClose} />
-          <ModalAdd />
+          <ModalAdd onClick={handleAddClick} />
         </div>
       </div>
     </div>

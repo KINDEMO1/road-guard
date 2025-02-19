@@ -1,7 +1,7 @@
-"use client"; // This tells Next.js that this component is a client component
+"use client"; // Ensure this is a client component
 
 import type { NextPage } from "next";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LogsOverTimeModal from "./logsovertimemodal"; // Import modal
 
 export type LogsOverTimeType = {
@@ -14,6 +14,13 @@ const LogsOverTime: NextPage<LogsOverTimeType> = ({
   property1 = "Default",
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isClient, setIsClient] = useState(false); // Fix SSR mismatch
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) return null; // Prevent hydration mismatch
 
   const handleButtonClick = () => {
     setIsModalOpen(!isModalOpen); // Toggle modal visibility
@@ -25,7 +32,7 @@ const LogsOverTime: NextPage<LogsOverTimeType> = ({
       <button
         className="cursor-pointer border-none py-[9px] px-4 bg-mediumseagreen h-[35px] w-[200px] rounded-md flex items-center justify-center text-sm font-montserrat text-colors-primary"
         data-property1={property1}
-        onClick={handleButtonClick} // Toggle the modal on button click
+        onClick={handleButtonClick}
       >
         Logs Over Time
       </button>

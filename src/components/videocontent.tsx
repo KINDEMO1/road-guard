@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+import gsap from "gsap";
 import type { NextPage } from "next";
 
 export type VideoContentType = {
@@ -11,6 +15,27 @@ const VideoContent: NextPage<VideoContentType> = ({
   gridSize,
   isFullscreen,
 }) => {
+  const [highlightedFrames, setHighlightedFrames] = useState<number[]>([]);
+
+  // Function to toggle highlight on click
+  const toggleHighlight = (index: number, el: HTMLElement) => {
+    if (highlightedFrames.includes(index)) {
+      gsap.to(el, {
+        backgroundColor: "black",
+        boxShadow: "none",
+        duration: 0.3,
+      });
+      setHighlightedFrames((prev) => prev.filter((i) => i !== index));
+    } else {
+      gsap.to(el, {
+        backgroundColor: "yellow",
+        boxShadow: "0 0 10px gold",
+        duration: 0.3,
+      });
+      setHighlightedFrames((prev) => [...prev, index]);
+    }
+  };
+
   // Determine grid template based on gridSize
   const gridTemplate =
     {
@@ -35,11 +60,12 @@ const VideoContent: NextPage<VideoContentType> = ({
       {Array.from({ length: totalVideos }, (_, index) => (
         <div
           key={index}
-          className="video-item w-full h-full bg-black"
+          className="video-item w-full h-full bg-black cursor-pointer"
           style={{
             height: "100%",
             width: "100%",
           }}
+          onClick={(e) => toggleHighlight(index, e.currentTarget)}
         >
           <img
             className="w-full h-full object-cover"

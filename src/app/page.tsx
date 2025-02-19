@@ -14,6 +14,7 @@ import X3CameraButton from "../components/cambttn3";
 import X4CameraButton from "../components/cambttn4";
 import VideoContent from "../components/videocontent";
 import Footer from "../components/Footer";
+import CameraList from "../components/cameralist";
 
 const MainPage = () => {
   const [gridSize, setGridSize] = useState(1); // Default to 1x1 grid
@@ -79,14 +80,14 @@ const MainPage = () => {
     >
       <header className="self-stretch shadow-md bg-slategray flex flex-row items-start justify-start pt-[5px] px-0 pb-1 box-border shrink-0 top-[0] z-[99] sticky max-w-full text-left text-[24px] text-colors-primary font-kanit">
         <Image
-          className="h-9 w-[40px] relative object-cover z-[1]"
+          className="h-9 w-[40px] relative object-cover z-[1] ml-4"
           loading="lazy"
           width={53}
           height={36}
           alt="Logo"
           src="/img/logo.png"
         />
-        <a className="[text-decoration:none] w-[245px] relative font-semibold text-[inherit] inline-block shrink-0 z-[1]">
+        <a className="[text-decoration:none] w-[245px] relative font-semibold text-[inherit] inline-block shrink-0 z-[1] ml-4">
           ROAD GUARD
         </a>
       </header>
@@ -104,12 +105,12 @@ const MainPage = () => {
               <div className="self-stretch flex flex-row items-end justify-start py-0 pl-0 pr-0.5 gap-[15.5px] mq725:flex-wrap mq975:flex-wrap mq975:pl-[113px] mq975:box-border mq450:pl-5 mq450:box-border">
                 <ClassificationType property1="Classification Type" />
                 <SpeedButton property1="Default" />
-                <button className="cursor-pointer border-none pt-0 px-0 pb-0 bg-transparent rounded-[4px] flex flex-col items-start justify-end">
-                  <LogsOverTime property1="Default" />
-                </button>
-                <button className="cursor-pointer border-none pt-0 px-0 pb-0 bg-transparent rounded-[4px] pl-0 pr-1.5 flex flex-col items-start justify-end mq450:flex-1">
+                <div>
+                  <LogsOverTime /> {/* Standalone button */}
+                </div>
+                <div>
                   <AddCamera1 property1="Default" />
-                </button>
+                </div>
                 <div className="flex flex-row items-start justify-start pt-0 px-0 pb-0">
                   <FullScreen1 onClick={handleFullscreenClick} />
                 </div>
@@ -119,7 +120,7 @@ const MainPage = () => {
         </div>
 
         <div className="self-stretch flex-1 flex flex-row items-start justify-start gap-2.5 max-w-full flex-wrap overflow-hidden">
-          <div className="self-stretch w-[250px] relative bg-gainsboro" />
+          <CameraList />
           <div className="flex flex-col items-start justify-start pt-[5px] px-0 pb-0 gap-[13px]">
             <button
               onClick={() => setGridSize(1)}
