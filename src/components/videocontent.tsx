@@ -15,24 +15,35 @@ const VideoContent: NextPage<VideoContentType> = ({
   gridSize,
   isFullscreen,
 }) => {
-  const [highlightedFrames, setHighlightedFrames] = useState<number[]>([]);
+  const [highlightedFrame, setHighlightedFrame] = useState<number | null>(null);
 
   // Function to toggle highlight on click
   const toggleHighlight = (index: number, el: HTMLElement) => {
-    if (highlightedFrames.includes(index)) {
+    // Remove highlight from the previously selected frame
+    if (highlightedFrame !== null) {
+      const prevEl = document.querySelector(
+        `.video-item[data-index="${highlightedFrame}"]`
+      );
+      if (prevEl) {
+        gsap.to(prevEl, {
+          backgroundColor: "black",
+          boxShadow: "none",
+          duration: 0.3,
+        });
+      }
+    }
+
+    // Highlight the newly selected frame
+    if (highlightedFrame !== index) {
       gsap.to(el, {
-        backgroundColor: "black",
-        boxShadow: "none",
+        backgroundColor: "blue",
+        boxShadow: "0 0 10px blue",
         duration: 0.3,
       });
-      setHighlightedFrames((prev) => prev.filter((i) => i !== index));
+      setHighlightedFrame(index);
     } else {
-      gsap.to(el, {
-        backgroundColor: "yellow",
-        boxShadow: "0 0 10px gold",
-        duration: 0.3,
-      });
-      setHighlightedFrames((prev) => [...prev, index]);
+      // If clicking the same frame, remove highlight
+      setHighlightedFrame(null);
     }
   };
 
@@ -61,6 +72,7 @@ const VideoContent: NextPage<VideoContentType> = ({
         <div
           key={index}
           className="video-item w-full h-full bg-black cursor-pointer"
+          data-index={index}
           style={{
             height: "100%",
             width: "100%",
